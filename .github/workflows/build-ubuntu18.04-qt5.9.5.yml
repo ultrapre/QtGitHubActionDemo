@@ -27,5 +27,5 @@ jobs:
           fetch-depth: 1
       - name: Build project
         id: BuildPorject
-        run: qmake QtGitHubActiionDemo.pro && make
+        run: qmake && make
 
