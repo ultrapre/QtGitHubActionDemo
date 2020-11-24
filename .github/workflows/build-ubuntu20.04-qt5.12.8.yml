@@ -4,7 +4,7 @@ on:
 
 jobs:
   build-test:
-    name: build with ubuntu 20.04 and qt5.12.5
+    name: build with ubuntu 20.04 and qt5.12.8
     runs-on: ubuntu-20.04
     steps:
       - name: Update system
