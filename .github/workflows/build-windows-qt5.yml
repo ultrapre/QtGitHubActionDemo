@@ -18,6 +18,7 @@ jobs:
           #- qt_version: 5.12.9
           #  qt_target: desktop
           #  qt_arch: win64_msvc2017_64
+          #  msvc_version: 2017
           - qt_version: 5.15.1
             qt_target: desktop
             qt_arch: win64_msvc2019_64
