@@ -9,10 +9,6 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04]
-        installCharts: [1]
-        exclude:
-          - os: ubuntu-26.04
-            installCharts: 1
     steps:
       - name: Update system
         id: UpdateSystem
@@ -31,9 +27,9 @@ jobs:
         run: sudo apt-get install qt5-default libqt5websockets5 libqt5websockets5-dev libqt5serialport5 libqt5serialport5-dev -y
       - name: Install QtCharts
         id: InstallQtCharts
-        if:  ${{ matrix.installCharts }}
+        if:  ${{ ${{ matrix.os }} != ubuntu-16.04}}
         #run: sudo apt-get install libqt5charts5 libqt5charts5-dev -y
-        run: echo ${{ matrix.os }}
+        run: echo ${{ ${{ matrix.os }} != ubuntu-16.04  }}
       - uses: actions/checkout@v1
         with:
           fetch-depth: 1
