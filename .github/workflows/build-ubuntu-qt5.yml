@@ -11,7 +11,7 @@ jobs:
         os: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04]
         installCharts: [1]
         exclude:
-          - os: ubuntu-16.04
+          - os: ubuntu-26.04
             installCharts: 1
     steps:
       - name: Update system
@@ -33,7 +33,7 @@ jobs:
         id: InstallQtCharts
         if:  ${{ matrix.installCharts }}
         #run: sudo apt-get install libqt5charts5 libqt5charts5-dev -y
-        run: echo github['runs-on']
+        run: echo  ${{ github['runs-on'] }}
       - uses: actions/checkout@v1
         with:
           fetch-depth: 1
