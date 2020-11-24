@@ -33,7 +33,7 @@ jobs:
         id: InstallQtCharts
         if:  ${{ matrix.installCharts }}
         #run: sudo apt-get install libqt5charts5 libqt5charts5-dev -y
-        run: echo  ${{ github['runs-on'] }}
+        run: echo ${{ matrix.os }}
       - uses: actions/checkout@v1
         with:
           fetch-depth: 1
