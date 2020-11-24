@@ -9,9 +9,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - qt_version: 5.6.3
-            qt_target: desktop
-            qt_arch: win64_msvc2015_64
+          #- qt_version: 5.6.3
+          #  qt_target: desktop
+          #  qt_arch: win64_msvc2015_64
           - qt_version: 5.9.9
             qt_target: desktop
             qt_arch: win64_msvc2017_64
