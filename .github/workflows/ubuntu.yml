@@ -3,8 +3,8 @@ on:
   push:
 
 jobs:
-  install-qt:
-    name: Install environments
+  build-test:
+    name: build with ubuntu 18.04 and qt5.9.5
     runs-on: ubuntu-18.04
     steps:
       - name: Update system
@@ -27,5 +27,5 @@ jobs:
           fetch-depth: 1
       - name: Build project
         id: BuildPorject
-        run: qmake QtSwissArmyKnife.pro && make
+        run: qmake QtGitHubActiionDemo.pro && make
 
