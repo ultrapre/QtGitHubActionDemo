@@ -27,7 +27,7 @@ jobs:
         run: sudo apt-get install qt5-default libqt5websockets5 libqt5websockets5-dev libqt5serialport5 libqt5serialport5-dev -y
       - name: Install QtCharts
         id: InstallQtCharts
-        if: ${{ matrix.os != ubuntu-16.04 }}
+        if: ${{ matrix.os != 'ubuntu-16.04' }}
         #run: sudo apt-get install libqt5charts5 libqt5charts5-dev -y
         run: echo '${{ matrix.os }} != ubuntu-16.04'
       - uses: actions/checkout@v1
