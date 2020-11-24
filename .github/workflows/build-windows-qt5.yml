@@ -10,7 +10,7 @@ jobs:
       matrix:
         qt_ver: [5.15.2]
         qt_target: [desktop]
-        qt_arch: [win32_msvc2019, win64_msvc2019_64, win64_mingw81]
+        qt_arch: [win32_msvc2019, win64_msvc2019_64]
         include:
           - qt_arch: win32_msvc2019
             msvc_arch: x86
@@ -41,7 +41,6 @@ jobs:
           fetch-depth: 1
       # Build the project
       - name: build-msvc
-        if: ${{ matrix.msvc_arch }} != 'win64_mingw81'
         shell: cmd
         env:
           vc_arch: ${{ matrix.msvc_arch }}
