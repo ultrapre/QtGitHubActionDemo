@@ -28,14 +28,15 @@ jobs:
           key: ${{ runner.os }}-Qt/${{matrix.qt_ver}}/${{matrix.qt_arch}}
       # Install Qt
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2.5.3
+        uses: jurplel/install-qt-action@v2.10.0
         with:
           version: ${{ matrix.qt_ver }}
           target: ${{ matrix.qt_target }}
           arch: ${{ matrix.qt_arch }}
           cached: ${{steps.WindowsCacheQt.outputs.cache-hit }}
       # Pull code and checkout.
-      - uses: actions/checkout@v1
+      - name: Pull code
+        uses: actions/checkout@v1
         with:
           fetch-depth: 1
       # Build the project
