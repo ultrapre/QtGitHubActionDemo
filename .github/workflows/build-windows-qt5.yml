@@ -7,3 +7,34 @@ jobs:
     name: Build the project on windows platform with Qt5
     runs-on: windows-latest
     strategy:
+      matrix:
+        include:
+          - qt_version: 5.6.3
+            qt_target: desktop
+            qt_arch: win64_msvc2015_64
+          - qt_version: 5.9.9
+            qt_target: desktop
+            qt_arch: win64_msvc2017_64
+          - qt_version: 5.12.9
+            qt_target: desktop
+            qt_arch: win64_msvc2017_64
+          - qt_version: 5.15.1
+            qt_target: desktop
+            qt_arch: win64_msvc2019_64
+    steps:
+      - name: cacheQt
+        id: WindowsCacheQt
+        uses: actions/cache@v1
+        with:
+          path: ../Qt/${{matrix.qt_ver}}/${{matrix.qt_arch_install}}
+          key: ${{ runner.os }}-Qt/${{matrix.qt_version}}/${{matrix.qt_arch}}         
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2.10.0
+        with:
+          # Version of Qt to install
+          version: ${{ matrix.qt_version }}
+          # Target platform for build
+          target: ${{ matrix.qt_target }}
+          # Architecture for Windows/Android
+          arch: ${{ matrix.qt_arch }}
+          cached: ${{steps.WindowsCacheQt.outputs.cache-hit }}
