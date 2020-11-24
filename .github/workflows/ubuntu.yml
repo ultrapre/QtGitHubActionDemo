@@ -12,7 +12,7 @@ jobs:
         id: UpdateSystem
         run: apt-get update --fix-missing && sudo apt-get upgrade -y
       - name: Install g++
-        id: InstallG++
+        id: InstallGxx
         run: sudo apt-get install gcc g++ -y
       - name: Install gl1
         id: Installgl1
