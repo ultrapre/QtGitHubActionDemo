@@ -8,6 +8,16 @@ jobs:
     name: Install environments
     runs-on: ubuntu-18.04
     steps:
+      - name: Update system
+        id: UpdateSystem
+        run: apt-get update --fix-missing && sudo apt-get upgrade -y
+      - name: Install g++
+        id: InstallG++
+        run: sudo apt-get install gcc g++ -y
+      - name: Install gl1
+        id: Installgl1
+        run: sudo apt-get install libgl1-mesa-dev -y
       - name: Install Qt
         id: InstallQt
-        run: sudo apt-get install qt5-default
+        run: sudo apt-get install qt5-default libqt5charts5 libqt5charts5-dev libqt5websockets5 libqt5websockets5-dev libqt5serialport5 libqt5serialport5-dev -y
+      
