@@ -18,9 +18,6 @@ jobs:
           - qt_arch: win64_msvc2019_64
             msvc_arch: x64
             qt_arch_install: msvc2019_64
-          - qt_char: win64_mingw81
-            msvc_arch: x86
-            qt_arch_install: mingw81_64
     steps:
       # Cache Qt
       - name: cacheQt
@@ -52,9 +49,3 @@ jobs:
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" %vc_arch%
           qmake
           nmake
-      - name: build-mingw
-        if: ${{ matrix.msvc_arch }} == 'win64_mingw81'
-        shell: cmd
-        run: |
-          qmake
-          make
