@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Update system
         id: UpdateSystem
-        run: apt-get update --fix-missing && sudo apt-get upgrade -y
+        run: sudo apt-get update --fix-missing && sudo apt-get upgrade -y
       - name: Install g++
         id: InstallGxx
         run: sudo apt-get install gcc g++ -y
