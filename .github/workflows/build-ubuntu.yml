@@ -4,7 +4,7 @@ on:
 
 jobs:
   build-test:
-    name: Build the project on ubuntu platform
+    name: Build the project on ubuntu platform with Qt5
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
