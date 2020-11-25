@@ -1,4 +1,4 @@
-name: windows-mingw
+name: build-windows-mingw
 on:
   push
   
