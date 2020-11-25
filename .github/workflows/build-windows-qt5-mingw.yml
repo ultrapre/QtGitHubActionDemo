@@ -12,10 +12,10 @@ jobs:
         qt_target: [desktop]
         include:
           - qt_ver: 5.12.10
-            qt_ver: win64_mingw73
+            qt_arch: win64_mingw73
             qt_arch_install: mingw73_64
-        - qt_ver: 5.15.2
-            qt_ver: win64_mingw81
+          - qt_ver: 5.15.2
+            qt_arch: win64_mingw81
             qt_arch_install: mingw81_64
     steps:
       # Cache Qt
