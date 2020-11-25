@@ -43,4 +43,4 @@ jobs:
         shell: cmd
         run: |
           qmake
-          nmake
+          make
