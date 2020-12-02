@@ -78,5 +78,5 @@ jobs:
           tag_name: DailyBuild
           release_name: DailyBuild
           body: The daily build.
-          draft: false
+          draft: true
           prerelease: false
