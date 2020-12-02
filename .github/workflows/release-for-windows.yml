@@ -67,8 +67,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }} # This token is provided by Actions, you do not need to create your own token
           SOURCE: QtGitHubActionDemo-for-Windows-${{ matrix.msvc_arch }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: DailyBuild
+          release_name: DailyBuild
           body: The daily building.
           draft: false
           prerelease: false
