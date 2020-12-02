@@ -1,4 +1,4 @@
-name: release-windows-msvc
+name: daily-build-for-windows
 on:
   push:
     branches:
