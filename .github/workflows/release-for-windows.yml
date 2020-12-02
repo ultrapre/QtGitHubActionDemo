@@ -65,10 +65,10 @@ jobs:
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }} # This token is provided by Actions, you do not need to create your own token
-          SOURCE: QtGitHubActionDemo-for-Windows-${{ matrix.msvc_arch }}
+          SOURCE: release
         with:
           tag_name: DailyBuild
           release_name: DailyBuild
-          body: The daily building.
+          body: The daily build.
           draft: false
           prerelease: false
