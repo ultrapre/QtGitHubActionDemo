@@ -59,6 +59,14 @@ jobs:
         with:
           name: QtGitHubActionDemo-for-Windows-${{ matrix.msvc_arch }}
           path: release
+      # Delete daily build
+      - name: Delete daily build
+        uses: dev-drprasad/delete-tag-and-release@v0.1.2
+        with:
+          delete_release: true # default: false
+          tag_name: DailyBuild # tag name to delete
+        env:
+          GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }}
       # Create release
       - name: Create Release
         id: create_release
