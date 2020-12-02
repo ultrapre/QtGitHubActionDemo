@@ -67,7 +67,7 @@ jobs:
       # Update release
       - name: Update release
         id: update_release
-        uses: tubone24/update_release@v1.0
+        uses: tubone24/update_release@v1.1
         env:
           GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }}
         with:
