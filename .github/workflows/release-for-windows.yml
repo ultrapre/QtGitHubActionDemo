@@ -2,7 +2,7 @@ name: release-windows-msvc
 on:
   push:
     branches:
-      - release
+      - master
     tags:
       - v*
   
