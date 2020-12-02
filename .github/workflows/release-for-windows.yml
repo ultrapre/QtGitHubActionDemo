@@ -1,6 +1,10 @@
 name: release-windows-msvc
 on:
-  push
+  push:
+    branches:
+      - release
+    tags:
+      - v*
   
 jobs:
   build-test:
