@@ -4,7 +4,7 @@ on:
     tags:
       - v*
 env:
-  APP_NAME: QtGitHubActionDemo
+  APP_NAME: qtgithubactiondemo
 
 jobs:
   create-release:
@@ -25,7 +25,7 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          body: It is ready ${{ steps.create_release.Inputs.tag_name }}.
+          body: The version is ready.
           draft: false
           prerelease: false
     
@@ -38,7 +38,6 @@ jobs:
         qt_ver: [5.15.2]
         qt_target: [desktop]
         qt_arch: [win32_msvc2019, win64_msvc2019_64]
-        # qt_arch: [win64_msvc2019_64]
         include:
           - qt_arch: win32_msvc2019
             msvc_arch: x86
@@ -103,6 +102,6 @@ jobs:
         with:
           upload_url:  ${{ steps.latest_release_info.outputs.upload_url }}
           asset_path: release.zip
-          asset_name: ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-Windows-${{ matrix.msvc_arch }}.zip
+          asset_name: ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-windows-${{ matrix.msvc_arch }}.zip
           asset_content_type: application/zip
           run: echo ${{ steps.latest_release_info.outputs.upload_url }}
