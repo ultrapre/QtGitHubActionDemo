@@ -25,7 +25,7 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          body: It is ready ${{ tag_name }}.
+          body: It is ready ${{ steps.latest_release_info.outputs.tag_name }}.
           draft: false
           prerelease: false
     
