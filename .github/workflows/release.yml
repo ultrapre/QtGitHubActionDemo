@@ -90,7 +90,7 @@ jobs:
           
       - name: To zip
         run: |
-          cd ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-windows-${{ matrix.msvc_arch }}.zip release
+          cd release
           7z.exe a ../${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-windows-${{ matrix.msvc_arch }}.zip ./*
           cd ..
           dir
