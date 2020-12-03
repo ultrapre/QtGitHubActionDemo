@@ -143,6 +143,12 @@ jobs:
           echo $PATH
           androiddeployqt --verbose --output release/ --input $(ls *.json) --android-platform android-29 --jdk $JAVA_HOME --gradle
           
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.qt_arch }}.apk
+          path: release/build/outputs/apk/debug/release-debug.apk
+      
       - name: Gets latest created release info
         id: latest_release_info
         uses: jossef/action-latest-release-info@v1.1.0
