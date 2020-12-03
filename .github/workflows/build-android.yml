@@ -28,13 +28,13 @@ jobs:
       - name: build android
         # https://doc.qt.io/qt-5/deployment-android.html
         run: |
-          echo 'export ANDROID_SDK_ROOT=$ANDROID_HOME'
-          echo 'export ANDROID_NDK_ROOT=$ANDROID_HOME/ndk-bundle'
+          export ANDROID_SDK_ROOT=$ANDROID_HOME
+          export ANDROID_NDK_ROOT=$ANDROID_HOME/ndk-bundle
           echo $ANDROID_HOME $ANDROID_HOME
           qmake
           make install INSTALL_ROOT="./release"
           ls
-          androiddeployqt --verbose --output release/ --input $(ls *.json)
+          androiddeployqt --verbose --output release/ --input $(ls *.json) --android-platform android-29
           ls
           
       - name: Archive production artifacts
