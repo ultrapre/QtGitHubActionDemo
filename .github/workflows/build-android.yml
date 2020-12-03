@@ -33,7 +33,6 @@ jobs:
           qmake
           make install INSTALL_ROOT="./release"
           ls
-          echo 'androiddeployqt --output android-build --input android-libAfcApiDemo.so-deployment-settings.json'
           androiddeployqt --verbose --output release/ --input $(ls *.json)
           ls
           
