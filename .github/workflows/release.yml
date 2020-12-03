@@ -78,6 +78,7 @@ jobs:
           dir
 
       - name: Rename directory
+        shell: cmd
         run: rename release ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-windows-${{ matrix.msvc_arch }}
 
       - name: Gets latest created release info
