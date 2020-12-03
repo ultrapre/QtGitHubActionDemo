@@ -35,7 +35,7 @@ jobs:
           qmake
           make install INSTALL_ROOT="./release"
           ls
-          androiddeployqt --verbose --output release/ --input $(ls *.json) --android-platform android-29
+          androiddeployqt --verbose --output release/ --input $(ls *.json) --android-platform android-29 --gradle
           ls
           
       - name: Archive production artifacts
