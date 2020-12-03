@@ -78,14 +78,20 @@ jobs:
           dir
 
       - name: Gets latest created release info
-        id: latest_release_info
+        id: latest_release_info2
         uses: jossef/action-latest-release-info@v1.1.0
         env:
           GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }}
           
       - name: Rename directory
         shell: cmd
-        run: rename release ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-windows-${{ matrix.msvc_arch }}
+        run: rename release ${{ env.APP_NAME }}-${{ steps.latest_release_info2.outputs.tag_name }}-for-windows-${{ matrix.msvc_arch }}
+        
+      - name: Gets latest created release info
+        id: latest_release_info
+        uses: jossef/action-latest-release-info@v1.1.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }}
         
       - name: Upload Release Asset
         id: upload-release-asset 
