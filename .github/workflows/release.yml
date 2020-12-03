@@ -83,14 +83,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }}
           
-      - name: Rename directory
-        run: |
-          mkdir ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-windows-${{ matrix.msvc_arch }}
-          xcopy /e release ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-windows-${{ matrix.msvc_arch }}
+      #- name: Rename directory
+      #  run: |
+      #    mkdir ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-windows-${{ matrix.msvc_arch }}
+      #    xcopy /e release ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-windows-${{ matrix.msvc_arch }}
           
       - name: To zip
         run: |
-          7z.exe a release.zip ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-windows-${{ matrix.msvc_arch }}/*
+          7z.exe a ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-windows-${{ matrix.msvc_arch }}.zip release/*
           dir
         
       - name: Upload Release Asset
