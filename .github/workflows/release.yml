@@ -1,4 +1,4 @@
-name: release-windows-msvc
+name: release
 on:
   push:
     tags:
@@ -16,13 +16,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: ${{ github.tag }}
-          release_name: ${{ github.tag }}
-          body: The ${{ github.tag }} is ready.
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: The ${{ github.ref }} is ready.
           draft: false
           prerelease: false
     
   build-for-windows:
+    needs: [create-release]
     name: Build the project for Windows with Qt5
     runs-on: windows-2019
     strategy:
