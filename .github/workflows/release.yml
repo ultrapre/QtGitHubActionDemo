@@ -157,4 +157,3 @@ jobs:
           asset_path: release/build/outputs/apk/debug/release-debug.apk
           asset_name: ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-${{ matrix.qt_arch }}.apk
           asset_content_type: application/zip
-          run: echo ${{ steps.latest_release_info.outputs.upload_url }}
