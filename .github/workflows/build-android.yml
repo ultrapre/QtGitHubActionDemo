@@ -8,8 +8,8 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        #qt_arch: [android_x86, android_armv7, android_arm64_v8a]
-        qt_arch: [android_armv7]
+        qt_arch: [android_x86, android_armv7, android_arm64_v8a]
+        #qt_arch: [android_armv7]
         qt_ver: [5.12.10]
         qt_target: [android]
     steps:
@@ -39,11 +39,11 @@ jobs:
           echo $JAVA_HOME_11_X64
           #export PATH=$PATH:$JAVA_HOME_8_X64
           echo $PATH
-          androiddeployqt --verbose --output release/ --input $(ls *.json) --android-platform android-29 --jdk $JAVA_HOME_8_X64 --gradle
+          androiddeployqt --verbose --output release/ --input $(ls *.json) --android-platform android-29 --jdk $JAVA_HOME --gradle
           ls
           
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.qt_arch }}
-          path: release
+          name: ${{ matrix.qt_arch }}.apk
+          path: release/build/outputs/apk/debug/release-debug.apk
