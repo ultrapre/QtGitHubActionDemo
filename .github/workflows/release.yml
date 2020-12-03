@@ -90,7 +90,9 @@ jobs:
           
       - name: To zip
         run: |
-          7z.exe a ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-windows-${{ matrix.msvc_arch }}.zip release/*
+          cd ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-windows-${{ matrix.msvc_arch }}.zip release
+          7z.exe a ../${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-windows-${{ matrix.msvc_arch }}.zip ./*
+          cd ..
           dir
         
       - name: Upload Release Asset
