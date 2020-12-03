@@ -31,7 +31,7 @@ jobs:
     
   build-for-windows:
     needs: [create-release]
-    name: Build
+    name: Build for Windows
     runs-on: windows-2019
     strategy:
       matrix:
@@ -108,7 +108,7 @@ jobs:
 
   build-for-android:
     needs: [create-release]
-    name: Build
+    name: Build for Android
     runs-on: ubuntu-20.04
     strategy:
       matrix:
@@ -137,13 +137,17 @@ jobs:
           echo $ANDROID_HOME $ANDROID_HOME
           qmake
           make install INSTALL_ROOT="./release"
-          ls
           echo $JAVA_HOME_8_X64
           echo $JAVA_HOME_11_X64
           #export PATH=$PATH:$JAVA_HOME_8_X64
           echo $PATH
           androiddeployqt --verbose --output release/ --input $(ls *.json) --android-platform android-29 --jdk $JAVA_HOME --gradle
-          ls
+          
+      - name: Gets latest created release info
+        id: latest_release_info
+        uses: jossef/action-latest-release-info@v1.1.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }}
       
       - name: Upload Release Asset
         id: upload-release-asset 
