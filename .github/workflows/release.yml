@@ -3,6 +3,8 @@ on:
   push:
     tags:
       - v*
+env:
+  APP_NAME: QtGitHubActionDemo
 
 jobs:
   create-release:
@@ -23,7 +25,7 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          body: The ${{ github.ref }} is ready.
+          body: It is ready ${{ tag_name }}.
           draft: false
           prerelease: false
     
@@ -101,6 +103,6 @@ jobs:
         with:
           upload_url:  ${{ steps.latest_release_info.outputs.upload_url }}
           asset_path: release.zip
-          asset_name: QtGitHubActionDemo-for-Windows-${{ matrix.msvc_arch }}.zip
+          asset_name: ${{ APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-Windows-${{ matrix.msvc_arch }}.zip
           asset_content_type: application/zip
           run: echo ${{ steps.latest_release_info.outputs.upload_url }}
