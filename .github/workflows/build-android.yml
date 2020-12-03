@@ -34,7 +34,8 @@ jobs:
           qmake
           make install INSTALL_ROOT="./release"
           ls
-          echo $JAVA_HOME_8_X64 
+          echo $JAVA_HOME_8_X64
+          export PATH=$PATH:$JAVA_HOME_8_X64
           echo $PATH
           androiddeployqt --verbose --output release/ --input $(ls *.json) --android-platform android-29 --jdk $JAVA_HOME_8_X64 --gradle
           ls
