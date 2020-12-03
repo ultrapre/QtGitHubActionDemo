@@ -30,9 +30,10 @@ jobs:
           export ANDROID_NDK_ROOT=$ANDROID_HOME/ndk-bundle
           qmake
           make
+          dir
           
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.qt_arch }}.apk
+          name: ${{ matrix.qt_arch }}
           path: release
