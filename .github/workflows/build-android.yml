@@ -28,7 +28,7 @@ jobs:
       - name: build android
         # https://doc.qt.io/qt-5/deployment-android.html
         run: |
-          expoer JAVA_HOME = $JAVA_HOME_8_X64
+          export JAVA_HOME = $JAVA_HOME_8_X64
           export ANDROID_SDK_ROOT=$ANDROID_HOME
           export ANDROID_NDK_ROOT=$ANDROID_HOME/ndk-bundle
           echo $ANDROID_HOME $ANDROID_HOME
