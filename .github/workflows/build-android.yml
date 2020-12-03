@@ -31,11 +31,10 @@ jobs:
           export ANDROID_SDK_ROOT=$ANDROID_HOME
           export ANDROID_NDK_ROOT=$ANDROID_HOME/ndk-bundle
           echo $ANDROID_HOME $ANDROID_HOME
-          sudo apt-get install ant -y
           qmake
           make install INSTALL_ROOT="./release"
           ls
-          androiddeployqt --verbose --output release/ --input $(ls *.json) --android-platform android-29 --gradle
+          androiddeployqt --verbose --output release/ --input $(ls *.json) --android-platform android-29 --jdk $JAVA_HOME_8_X64 --gradle
           ls
           
       - name: Archive production artifacts
