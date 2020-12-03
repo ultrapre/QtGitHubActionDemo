@@ -3,9 +3,7 @@ on:
   push:
     tags:
       - v*
-env:
-  upload_url: jobs.create-release.create_release.outputs.upload_url
-  
+
 jobs:
   create-release:
     name: Create release
@@ -93,8 +91,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url:  $ {{ upload_url }} # ${{ steps.create_release.outputs.upload_url }}
+          upload_url:  $ {{ jobs.create-release.create_release.outputs.upload_url }} # ${{ steps.create_release.outputs.upload_url }}
           asset_path: release.zip
           asset_name: QtGitHubActionDemo-for-Windows-${{ matrix.msvc_arch }}.zip
           asset_content_type: application/zip
-          run: echo ${{ upload_url }}
+          run: echo ${{ jobs.create-release.create_release.outputs.upload_url }}
