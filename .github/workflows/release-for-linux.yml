@@ -49,10 +49,10 @@ jobs:
         env:
           outputdir: QtGitHubActionDemo-${{ steps.latest_release_info.outputs.tag_name }}-for-linux-x64
         run: |
-          mkdir ${{ outputdir }}
-          cp QtGitHubActionDemo ${{ outputdir }}
+          mkdir ${{ env.outputdir }}
+          cp QtGitHubActionDemo ${{ env.outputdir }}
           wget https://github.com/probonopd/linuxdeployqt/releases/download/6/linuxdeployqt-6-x86_64.AppImage linuxdeployqt
-          ./linuxdeployqt ${{ outputdir }}/QtGitHubActionDemo -appimage
-          tar -zcvf ${{ outputdir }}.tar.gz ${{ outputdir }}
+          ./linuxdeployqt ${{ env.outputdir }}/QtGitHubActionDemo -appimage
+          tar -zcvf ${{ env.outputdir }}.tar.gz ${{ env.outputdir }}
           ls -l
         
