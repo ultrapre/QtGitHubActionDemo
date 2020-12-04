@@ -329,7 +329,7 @@ jobs:
           
       - name: Packet with tar
         env:
-          outputdir: QtGitHubActionDemo-${{ steps.latest_release_info.outputs.tag_name }}-for-linux-x64
+          outputdir: ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-linux-x64
         run: |
             tar -zcvf ${{ env.APP_NAME }}.tar.gz ${{ env.outputdir }}
             ls -l
