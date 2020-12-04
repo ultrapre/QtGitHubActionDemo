@@ -63,6 +63,11 @@ jobs:
           chmod a+x ${{ env.linuxdeployqt }}
           ./${{ env.linuxdeployqt }} -version
           ./${{ env.linuxdeployqt }} ${{ env.outputdir }}/QtGitHubActionDemo -appimage
-          tar -zcvf ${{ env.outputdir }}.tar.gz ${{ env.outputdir }}
-          ls -l
+          
+      - name: Packet with tar
+        env:
+          outputdir: QtGitHubActionDemo-${{ steps.latest_release_info.outputs.tag_name }}-for-linux-x64
+        run: |
+            tar -zcvf ${{ env.outputdir }}.tar.gz ${{ env.outputdir }}
+            ls -l
         
