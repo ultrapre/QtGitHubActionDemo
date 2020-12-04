@@ -26,3 +26,4 @@ jobs:
         run: |
           qmake -r -spec macx-ios-clang CONFIG+=release CONFIG+=iphoneos
           make
+          ls
