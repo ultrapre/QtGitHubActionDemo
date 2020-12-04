@@ -265,3 +265,82 @@ jobs:
           asset_path: ${{ env.APP_NAME }}.ipa
           asset_name: ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-ios.ipa
           asset_content_type: application/zip
+    
+    
+  build-for-linux:
+    name: Build for Linux
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Update System
+        run: sudo apt-get update --fix-missing -y
+        
+      - name: Install Environment
+        run: sudo apt-get install gcc g++ libgl1-mesa-dev make wget -y
+      
+      - name: Cache Qt
+        id: cache-qt
+        uses: actions/cache@v1
+        with:
+          path: ../Qt
+          key: ${{ runner.os }}-QtCache
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2.11.1
+        with:
+          cached: ${{ steps.cache-qt.outputs.cache-hit }}
+          version: 5.12.10
+          target: desktop
+          modules: qtcharts
+      
+      - name: Pull Repositories
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+
+      - name: Build Project
+        run: |
+          qmake
+          make
+          ls -l
+      - name: Gets latest created release info
+        id: latest_release_info
+        uses: jossef/action-latest-release-info@v1.1.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }}
+      
+      - name: Deploy
+        continue-on-error: true
+        env:
+          outputdir: ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-linux-x64
+          #linuxdeployqt_url: https://github.com/probonopd/linuxdeployqt/releases/download/6/linuxdeployqt-6-x86_64.AppImage
+          linuxdeployqt_url: https://github.com/probonopd/linuxdeployqt/releases/download/7/linuxdeployqt-7-x86_64.AppImage
+          linuxdeployqt: linuxdeployqt-7-x86_64.AppImage
+        run: |
+          export PATH=$PATH:$PWD
+          echo $PATH
+          pwd
+          mkdir ${{ env.outputdir }}
+          cp QtGitHubActionDemo ${{ env.outputdir }}
+          wget ${{ env.linuxdeployqt_url }}
+          ls -l
+          chmod a+x ${{ env.linuxdeployqt }}
+          ./${{ env.linuxdeployqt }} -version
+          ./${{ env.linuxdeployqt }} ${{ env.outputdir }}/QtGitHubActionDemo -appimage
+          
+      - name: Packet with tar
+        env:
+          outputdir: QtGitHubActionDemo-${{ steps.latest_release_info.outputs.tag_name }}-for-linux-x64
+        run: |
+            tar -zcvf ${{ env.APP_NAME }}.tar.gz ${{ env.outputdir }}
+            ls -l
+      
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }}
+        with:
+          upload_url: ${{ steps.latest_release_info.outputs.upload_url }}
+          asset_path: ${{ env.APP_NAME }}.tar.gz
+          asset_name: ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-linux.tar.gz
+          asset_content_type: application/zip
