@@ -85,8 +85,8 @@ jobs:
         env:
           zip_derectory: ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-windows-${{ matrix.msvc_arch }}
         run: |
-          mkdir ${{ zip_derectory }}
-          xcopy /e release ${{ zip_derectory }}
+          mkdir ${{ env.zip_derectory }}
+          xcopy /e release ${{ env.zip_derectory }}
           
       - name: To zip
         run: |
