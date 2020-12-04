@@ -29,6 +29,12 @@ jobs:
           make
           ls
 
+      - name: artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: macos.zip
+          path: Release-iphonesimulator/QtGitHubActionDemo.app
+
       - name: Packing
         run: |
           mkdir Payload
