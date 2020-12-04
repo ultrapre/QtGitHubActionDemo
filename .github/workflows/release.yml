@@ -190,7 +190,7 @@ jobs:
       
       - name: Deploy app
         run: |
-          macdeployqt ${{ OUTPUT_FILE }}.app -dmg
+          macdeployqt ${{ env.OUTPUT_FILE }}.app -dmg
           ls -l
 
       - name: Gets latest created release info
@@ -238,7 +238,7 @@ jobs:
       - name: Create ipa
         run: |
           mkdir Payload
-          cp -R Release-iphonesimulator/${{ OUTPUT_FILE }}.app Payload/
+          cp -R Release-iphonesimulator/${{ env.OUTPUT_FILE }}.app Payload/
           zip -q -r ${{ env.RELEASE_NAME }}.zip Payload
           mv ${{ env.RELEASE_NAME }}.zip ${{ env.RELEASE_NAME }}.ipa
           ls -l
@@ -309,12 +309,12 @@ jobs:
           echo $PATH
           pwd
           mkdir ${{ env.outputdir }}
-          cp ${{ OUTPUT_FILE }} ${{ env.outputdir }}
+          cp ${{ env.OUTPUT_FILE }} ${{ env.outputdir }}
           wget ${{ env.linuxdeployqt_url }}
           ls -l
           chmod a+x ${{ env.linuxdeployqt }}
           ./${{ env.linuxdeployqt }} -version
-          ./${{ env.linuxdeployqt }} ${{ env.outputdir }}/${{ OUTPUT_FILE }} -appimage
+          ./${{ env.linuxdeployqt }} ${{ env.outputdir }}/${{ env.OUTPUT_FILE }} -appimage
           
       - name: Packet with tar
         env:
