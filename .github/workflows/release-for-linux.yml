@@ -9,11 +9,12 @@ jobs:
     strategy:
       matrix:
         #os: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04]
-        os: [ubuntu-20.04]
+        os: [ubuntu-16.04]
     steps:
       - name: Update system
         id: UpdateSystem
         run: sudo apt-get update --fix-missing -y
+      - name: Install QtCreator
       - name: Install g++
         id: InstallGxx
         run: sudo apt-get install gcc g++ -y
