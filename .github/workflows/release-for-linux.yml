@@ -54,15 +54,11 @@ jobs:
           pwd
           mkdir ${{ env.outputdir }}
           cp QtGitHubActionDemo ${{ env.outputdir }}
-          wget https://github.com/probonopd/linuxdeployqt/releases/download/6/linuxdeployqt-6-x86_64.AppImage -o linuxdeployqt
+          wget https://github.com/probonopd/linuxdeployqt/releases/download/6/linuxdeployqt-6-x86_64.AppImage
           ls -l
-          chmod a+x linuxdeployqt
-          
-      - name: Deploy1
-        run: ./linuxdeployqt QtGitHubActionDemo-${{ steps.latest_release_info.outputs.tag_name }}-for-linux-x64/QtGitHubActionDemo -appimage
-      
-      - name: Deploy2
-        run:
+          chmod a+x linuxdeployqt-6-x86_64.AppImage
+          ./linuxdeployqt-6-x86_64.AppImage --version
+          ./linuxdeployqt-6-x86_64.AppImage ${{ env.outputdir }}/QtGitHubActionDemo -appimage
           tar -zcvf ${{ env.outputdir }}.tar.gz ${{ env.outputdir }}
           ls -l
         
