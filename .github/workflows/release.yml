@@ -4,7 +4,8 @@ on:
     tags:
       - v*
 env:
-  APP_NAME: qtgithubactiondemo
+  OUTPUT_FILE: QtGitHubActionDemo
+  RELEASE_NAME: qtgithubactiondemo
   GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
 
 jobs:
@@ -83,14 +84,14 @@ jobs:
       - name: Rename directory
         id: rename_operation
         env:
-          zip_derectory: ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-windows-${{ matrix.msvc_arch }}
+          zip_derectory: ${{ env.RELEASE_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-windows-${{ matrix.msvc_arch }}
         run: |
           mkdir ${{ env.zip_derectory }}
           xcopy /e release ${{ env.zip_derectory }}
           
       - name: To zip
         env:
-          zip_derectory: ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-windows-${{ matrix.msvc_arch }}
+          zip_derectory: ${{ env.RELEASE_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-windows-${{ matrix.msvc_arch }}
         run: |
           7z.exe a ${{ env.zip_derectory }}.zip ${{ env.zip_derectory }}/*
           dir
@@ -99,7 +100,7 @@ jobs:
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1
         env:
-          zip_derectory: ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-windows-${{ matrix.msvc_arch }}
+          zip_derectory: ${{ env.RELEASE_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-windows-${{ matrix.msvc_arch }}
         with:
           upload_url: ${{ steps.latest_release_info.outputs.upload_url }}
           asset_path: ${{ env.zip_derectory }}.zip
@@ -153,7 +154,7 @@ jobs:
         with:
           upload_url: ${{ steps.latest_release_info.outputs.upload_url }}
           asset_path: release/build/outputs/apk/debug/release-debug.apk
-          asset_name: ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-${{ matrix.qt_arch }}.apk
+          asset_name: ${{ env.RELEASE_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-${{ matrix.qt_arch }}.apk
           asset_content_type: application/zip
 
 
@@ -189,7 +190,7 @@ jobs:
       
       - name: Deploy app
         run: |
-          macdeployqt QtGitHubActionDemo.app -dmg
+          macdeployqt ${{ OUTPUT_FILE }}.app -dmg
           ls -l
 
       - name: Gets latest created release info
@@ -201,8 +202,8 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.latest_release_info.outputs.upload_url }}
-          asset_path: ${{ env.APP_NAME }}.dmg
-          asset_name: ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-macos.dmg
+          asset_path: ${{ env.RELEASE_NAME }}.dmg
+          asset_name: ${{ env.RELEASE_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-macos.dmg
           asset_content_type: application/zip
 
 
@@ -237,9 +238,9 @@ jobs:
       - name: Create ipa
         run: |
           mkdir Payload
-          cp -R Release-iphonesimulator/QtGitHubActionDemo.app Payload/
-          zip -q -r ${{ env.APP_NAME }}.zip Payload
-          mv ${{ env.APP_NAME }}.zip ${{ env.APP_NAME }}.ipa
+          cp -R Release-iphonesimulator/${{ OUTPUT_FILE }}.app Payload/
+          zip -q -r ${{ env.RELEASE_NAME }}.zip Payload
+          mv ${{ env.RELEASE_NAME }}.zip ${{ env.RELEASE_NAME }}.ipa
           ls -l
       
       - name: Gets latest created release info
@@ -251,8 +252,8 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.latest_release_info.outputs.upload_url }}
-          asset_path: ${{ env.APP_NAME }}.ipa
-          asset_name: ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-ios.ipa
+          asset_path: ${{ env.RELEASE_NAME }}.ipa
+          asset_name: ${{ env.RELEASE_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-ios.ipa
           asset_content_type: application/zip
     
     
@@ -299,7 +300,7 @@ jobs:
       - name: Deploy
         continue-on-error: true
         env:
-          outputdir: ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-linux-x64
+          outputdir: ${{ env.RELEASE_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-linux-x64
           #linuxdeployqt_url: https://github.com/probonopd/linuxdeployqt/releases/download/6/linuxdeployqt-6-x86_64.AppImage
           linuxdeployqt_url: https://github.com/probonopd/linuxdeployqt/releases/download/7/linuxdeployqt-7-x86_64.AppImage
           linuxdeployqt: linuxdeployqt-7-x86_64.AppImage
@@ -308,18 +309,18 @@ jobs:
           echo $PATH
           pwd
           mkdir ${{ env.outputdir }}
-          cp QtGitHubActionDemo ${{ env.outputdir }}
+          cp ${{ OUTPUT_FILE }} ${{ env.outputdir }}
           wget ${{ env.linuxdeployqt_url }}
           ls -l
           chmod a+x ${{ env.linuxdeployqt }}
           ./${{ env.linuxdeployqt }} -version
-          ./${{ env.linuxdeployqt }} ${{ env.outputdir }}/QtGitHubActionDemo -appimage
+          ./${{ env.linuxdeployqt }} ${{ env.outputdir }}/${{ OUTPUT_FILE }} -appimage
           
       - name: Packet with tar
         env:
-          outputdir: ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-linux-x64
+          outputdir: ${{ env.RELEASE_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-linux-x64
         run: |
-            tar -zcvf ${{ env.APP_NAME }}.tar.gz ${{ env.outputdir }}
+            tar -zcvf ${{ env.RELEASE_NAME }}.tar.gz ${{ env.outputdir }}
             ls -l
       
       - name: Upload Release Asset
@@ -327,6 +328,6 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.latest_release_info.outputs.upload_url }}
-          asset_path: ${{ env.APP_NAME }}.tar.gz
-          asset_name: ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-linux.tar.gz
+          asset_path: ${{ env.RELEASE_NAME }}.tar.gz
+          asset_name: ${{ env.RELEASE_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-linux.tar.gz
           asset_content_type: application/zip
