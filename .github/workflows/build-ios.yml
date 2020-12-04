@@ -28,3 +28,10 @@ jobs:
           qmake -r -spec macx-ios-clang CONFIG+=release CONFIG+=iphoneos
           make
           ls
+
+      - name: Packing
+        run: |
+          mkdir Payload
+          cp Release-iphonesimulator/QtGitHubActionDemo.app Payload/QtGitHubActionDemo.app
+          zip -q -r QtGitHubActionDemo.zip Payload
+          mv QtGitHubActionDemo.zip QtGitHubActionDemo.ipa
