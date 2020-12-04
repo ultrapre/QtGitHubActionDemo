@@ -50,12 +50,13 @@ jobs:
           outputdir: QtGitHubActionDemo-${{ steps.latest_release_info.outputs.tag_name }}-for-linux-x64
         run: |
           export PATH=$PATH:$PWD
+          echo $PATH
+          pwd
           mkdir ${{ env.outputdir }}
           cp QtGitHubActionDemo ${{ env.outputdir }}
-          wget https://github.com/probonopd/linuxdeployqt/releases/download/6/linuxdeployqt-6-x86_64.AppImage
+          wget https://github.com/probonopd/linuxdeployqt/releases/download/6/linuxdeployqt-6-x86_64.AppImage -o linuxdeployqt
           ls -l
-          pwd
-          sudo linuxdeployqt-6-x86_64.AppImage ${{ env.outputdir }}/QtGitHubActionDemo -appimage
+          sudo linuxdeployqt ${{ env.outputdir }}/QtGitHubActionDemo -appimage
           tar -zcvf ${{ env.outputdir }}.tar.gz ${{ env.outputdir }}
           ls -l
         
