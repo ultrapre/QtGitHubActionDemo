@@ -21,7 +21,7 @@ jobs:
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }} # This token is provided by Actions, you do not need to create your own token
+          GITHUB_TOKEN: ${{ secrets.GitHubToken }} # This token is provided by Actions, you do not need to create your own token
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
@@ -81,7 +81,7 @@ jobs:
         id: latest_release_info
         uses: jossef/action-latest-release-info@v1.1.0
         env:
-          GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }}
+          GITHUB_TOKEN: ${{ secrets.GitHubToken }}
           
       - name: Rename directory
         run: |
@@ -97,7 +97,7 @@ jobs:
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }}
+          GITHUB_TOKEN: ${{ secrets.GitHubToken }}
         with:
           upload_url: ${{ steps.latest_release_info.outputs.upload_url }}
           asset_path: ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-windows-${{ matrix.msvc_arch }}.zip
@@ -145,13 +145,13 @@ jobs:
         id: latest_release_info
         uses: jossef/action-latest-release-info@v1.1.0
         env:
-          GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }}
+          GITHUB_TOKEN: ${{ secrets.GitHubToken }}
       
       - name: Upload Release Asset
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }}
+          GITHUB_TOKEN: ${{ secrets.GitHubToken }}
         with:
           upload_url: ${{ steps.latest_release_info.outputs.upload_url }}
           asset_path: release/build/outputs/apk/debug/release-debug.apk
@@ -199,13 +199,13 @@ jobs:
         id: latest_release_info
         uses: jossef/action-latest-release-info@v1.1.0
         env:
-          GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }}
+          GITHUB_TOKEN: ${{ secrets.GitHubToken }}
       
       - name: Upload Release Asset
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }}
+          GITHUB_TOKEN: ${{ secrets.GitHubToken }}
         with:
           upload_url: ${{ steps.latest_release_info.outputs.upload_url }}
           asset_path: ${{ env.APP_NAME }}.dmg
@@ -253,13 +253,13 @@ jobs:
         id: latest_release_info
         uses: jossef/action-latest-release-info@v1.1.0
         env:
-          GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }}
+          GITHUB_TOKEN: ${{ secrets.GitHubToken }}
       
       - name: Upload Release Asset
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }}
+          GITHUB_TOKEN: ${{ secrets.GitHubToken }}
         with:
           upload_url: ${{ steps.latest_release_info.outputs.upload_url }}
           asset_path: ${{ env.APP_NAME }}.ipa
@@ -307,7 +307,7 @@ jobs:
         id: latest_release_info
         uses: jossef/action-latest-release-info@v1.1.0
         env:
-          GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }}
+          GITHUB_TOKEN: ${{ secrets.GitHubToken }}
       
       - name: Deploy
         continue-on-error: true
@@ -339,7 +339,7 @@ jobs:
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }}
+          GITHUB_TOKEN: ${{ secrets.GitHubToken }}
         with:
           upload_url: ${{ steps.latest_release_info.outputs.upload_url }}
           asset_path: ${{ env.APP_NAME }}.tar.gz
