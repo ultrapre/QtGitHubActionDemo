@@ -11,7 +11,7 @@ jobs:
         run: sudo apt-get update --fix-missing -y
         
       - name: Install Environment
-        run: sudo apt-get install gcc g++ libgl1-mesa-dev make -y
+        run: sudo apt-get install gcc g++ libgl1-mesa-dev make wget -y
       
       - name: Cache Qt
         id: cache-qt
@@ -26,6 +26,7 @@ jobs:
           cached: ${{ steps.cache-qt.outputs.cache-hit }}
           version: 5.12.10
           target: desktop
+          modules: qtcharts
       
       - name: Pull Repositories
         uses: actions/checkout@v1
@@ -37,3 +38,21 @@ jobs:
           qmake
           make
           ls -l
+
+      - name: Gets latest created release info
+        id: latest_release_info
+        uses: jossef/action-latest-release-info@v1.1.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }}
+      
+      - name: Deploy
+        env:
+          outputdir: QtGitHubActionDemo-${{ steps.latest_release_info.outputs.tag_name }}-for-linux-x64
+        run: |
+          mkdir ${{ outputdir }}
+          cp QtGitHubActionDemo ${{ outputdir }}
+          wget https://github.com/probonopd/linuxdeployqt/releases/download/6/linuxdeployqt-6-x86_64.AppImage linuxdeployqt
+          ./linuxdeployqt ${{ outputdir }}/QtGitHubActionDemo -appimage
+          tar -zcvf ${{ outputdir }}.tar.gz ${{ outputdir }}
+          ls -l
+        
