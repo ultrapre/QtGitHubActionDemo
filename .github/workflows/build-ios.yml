@@ -38,6 +38,6 @@ jobs:
       - name: Packing
         run: |
           mkdir Payload
-          cp Release-iphonesimulator/QtGitHubActionDemo.app Payload/QtGitHubActionDemo.app
+          cp Release-iphonesimulator/QtGitHubActionDemo.app Payload/ -r
           zip -q -r QtGitHubActionDemo.zip Payload
           mv QtGitHubActionDemo.zip QtGitHubActionDemo.ipa
