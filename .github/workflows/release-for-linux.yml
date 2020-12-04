@@ -59,9 +59,9 @@ jobs:
           cp QtGitHubActionDemo ${{ env.outputdir }}
           wget ${{ env.linuxdeployqt_url }}
           ls -l
-          chmod a+x ${{ linuxdeployqt }}
-          ./${{ linuxdeployqt }} --version
-          ./${{ linuxdeployqt }} ${{ env.outputdir }}/QtGitHubActionDemo -appimage
+          chmod a+x ${{ env.linuxdeployqt }}
+          ./${{ env.linuxdeployqt }} --version
+          ./${{ env.linuxdeployqt }} ${{ env.outputdir }}/QtGitHubActionDemo -appimage
           tar -zcvf ${{ env.outputdir }}.tar.gz ${{ env.outputdir }}
           ls -l
         
