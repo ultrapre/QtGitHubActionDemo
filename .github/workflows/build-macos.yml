@@ -31,4 +31,9 @@ jobs:
         run: |
           qmake
           make
-          ls
+          ls -l
+      
+      - name: Deploy app
+        run: |
+          macdeployqt QtGitHubActionDemo.app -dmg
+          ls -l
