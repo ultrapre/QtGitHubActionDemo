@@ -157,3 +157,56 @@ jobs:
           asset_path: release/build/outputs/apk/debug/release-debug.apk
           asset_name: ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-${{ matrix.qt_arch }}.apk
           asset_content_type: application/zip
+
+
+  build-for-macos:
+    name: Build dor macOS
+    runs-on: macos-10.15
+    strategy:
+      matrix:
+        #qt_ver: [5.9.9, 5.12.10, 5.15.2]
+        qt_ver: [5.15.2]
+        qt_arch: [clang_64]
+    steps:
+      - name: cacheQt
+        id: MacosCacheQt
+        uses: actions/cache@v1
+        with:
+          path: ../Qt/${{matrix.qt_ver}}/${{matrix.qt_arch}}
+          key: ${{ runner.os }}-Qt/${{matrix.qt_ver}}/${{matrix.qt_arch}}   
+      - name: Install Qt
+        # if: steps.MacosCacheQt.outputs.cache-hit != 'true'
+        uses: jurplel/install-qt-action@v2.10.0
+        with:
+          version: ${{ matrix.qt_ver }}
+          cached: ${{ steps.MacosCacheQt.outputs.cache-hit }}
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      - name: build macos
+        run: |
+          qmake
+          make
+          ls -l
+      
+      - name: Deploy app
+        run: |
+          macdeployqt QtGitHubActionDemo.app -dmg
+          ls -l
+
+      - name: Gets latest created release info
+        id: latest_release_info
+        uses: jossef/action-latest-release-info@v1.1.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }}
+      
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }}
+        with:
+          upload_url:  ${{ steps.latest_release_info.outputs.upload_url }}
+          asset_path: ${{ env.APP_NAME }}.dmg
+          asset_name: ${{ env.APP_NAME }}-${{ steps.latest_release_info.outputs.tag_name }}-for-macos.dmg
+          asset_content_type: application/zip
