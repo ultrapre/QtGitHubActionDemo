@@ -59,7 +59,7 @@ jobs:
           chmod a+x linuxdeployqt
           
       - name: Deploy1
-        run: ./linuxdeployqt ${{ env.outputdir }}/QtGitHubActionDemo -appimage
+        run: ./linuxdeployqt QtGitHubActionDemo-${{ steps.latest_release_info.outputs.tag_name }}-for-linux-x64/QtGitHubActionDemo -appimage
       
       - name: Deploy2
         run:
