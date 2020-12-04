@@ -48,17 +48,20 @@ jobs:
       - name: Deploy
         env:
           outputdir: QtGitHubActionDemo-${{ steps.latest_release_info.outputs.tag_name }}-for-linux-x64
+          #linuxdeployqt_url: https://github.com/probonopd/linuxdeployqt/releases/download/6/linuxdeployqt-6-x86_64.AppImage
+          linuxdeployqt_url: https://github.com/probonopd/linuxdeployqt/releases/download/7/linuxdeployqt-7-x86_64.AppImage
+          linuxdeployqt: linuxdeployqt-7-x86_64.AppImage
         run: |
           export PATH=$PATH:$PWD
           echo $PATH
           pwd
           mkdir ${{ env.outputdir }}
           cp QtGitHubActionDemo ${{ env.outputdir }}
-          wget https://github.com/probonopd/linuxdeployqt/releases/download/6/linuxdeployqt-6-x86_64.AppImage
+          wget ${{ env.linuxdeployqt_url }}
           ls -l
-          chmod a+x linuxdeployqt-6-x86_64.AppImage
-          ./linuxdeployqt-6-x86_64.AppImage --version
-          ./linuxdeployqt-6-x86_64.AppImage ${{ env.outputdir }}/QtGitHubActionDemo -appimage
+          chmod a+x ${{ linuxdeployqt }}
+          ./${{ linuxdeployqt }} --version
+          ./${{ linuxdeployqt }} ${{ env.outputdir }}/QtGitHubActionDemo -appimage
           tar -zcvf ${{ env.outputdir }}.tar.gz ${{ env.outputdir }}
           ls -l
         
