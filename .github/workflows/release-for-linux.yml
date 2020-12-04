@@ -46,6 +46,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }}
       
       - name: Deploy
+        continue-on-error: true
         env:
           outputdir: QtGitHubActionDemo-${{ steps.latest_release_info.outputs.tag_name }}-for-linux-x64
           #linuxdeployqt_url: https://github.com/probonopd/linuxdeployqt/releases/download/6/linuxdeployqt-6-x86_64.AppImage
