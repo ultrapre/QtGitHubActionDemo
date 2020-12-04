@@ -7,21 +7,11 @@ jobs:
     name: Build
     runs-on: ubuntu-16.04
     steps:
-      - name: Update system
-        id: UpdateSystem
+      - name: Update System
         run: sudo apt-get update --fix-missing -y
         
-      - name: Install g++
-        id: InstallGxx
-        run: sudo apt-get install gcc g++ -y
-        
-      - name: Install gl1
-        id: Installgl1
-        run: sudo apt-get install libgl1-mesa-dev -y
-        
-      - name: Install make
-        id: InstallMake
-        run: sudo apt-get install make -y
+      - name: Install Environment
+        run: sudo apt-get install gcc g++ libgl1-mesa-dev make -y
       
       - name: Cache Qt
         id: cache-qt
@@ -38,7 +28,7 @@ jobs:
           target: desktop
       
       - name: Pull Repositories
-      - uses: actions/checkout@v1
+        uses: actions/checkout@v1
         with:
           fetch-depth: 1
 
