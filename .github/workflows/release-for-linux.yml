@@ -53,8 +53,8 @@ jobs:
           cp QtGitHubActionDemo ${{ env.outputdir }}
           wget https://github.com/probonopd/linuxdeployqt/releases/download/6/linuxdeployqt-6-x86_64.AppImage -o linuxdeployqt
           ls -l
-          sudo chmod +x linuxdeployqt
-          sudo ./linuxdeployqt ${{ env.outputdir }}/QtGitHubActionDemo -appimage
+          pwd
+          sudo ./linuxdeployqt-6-x86_64.AppImage ${{ env.outputdir }}/QtGitHubActionDemo -appimage
           tar -zcvf ${{ env.outputdir }}.tar.gz ${{ env.outputdir }}
           ls -l
         
