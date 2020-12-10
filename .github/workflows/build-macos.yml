@@ -1,7 +1,9 @@
 name: build-macos
 on: 
   push:
-
+  workflow_dispatch:
+env:
+  targetName: qmake_action
 jobs:
   build:
     name: Build
@@ -11,8 +13,6 @@ jobs:
         #qt_ver: [5.9.9, 5.12.10, 5.15.2]
         qt_ver: [5.15.2]
         qt_arch: [clang_64]
-    env:
-      targetName: QtGitHubActionDemo
     steps:
       - name: cacheQt
         id: MacosCacheQt

@@ -1,7 +1,9 @@
 name: build-ios
 on: 
   push:
-
+  workflow_dispatch:
+env:
+  targetName: qmake_action
 jobs:
   build:
     name: Build
@@ -33,18 +35,18 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ios.zip
-          path: Release-iphonesimulator/QtGitHubActionDemo.app
+          path: Release-iphonesimulator/${{ env.targetName }}.app
 
       - name: Packing
         run: |
           mkdir Payload
-          cp -R Release-iphonesimulator/QtGitHubActionDemo.app Payload/
-          zip -q -r QtGitHubActionDemo.zip Payload
-          mv QtGitHubActionDemo.zip QtGitHubActionDemo.ipa
+          cp -R Release-iphonesimulator/${{ env.targetName }}.app Payload/
+          zip -q -r ${{ env.targetName }}.zip Payload
+          mv ${{ env.targetName }}.zip ${{ env.targetName }}.ipa
           ls -l
 
       - name: artifacts
         uses: actions/upload-artifact@v2
         with:
           name: ios-packed.ipa
-          path: QtGitHubActionDemo.ipa
+          path: ${{ env.targetName }}.ipa

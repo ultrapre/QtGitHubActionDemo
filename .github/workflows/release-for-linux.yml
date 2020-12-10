@@ -1,6 +1,7 @@
-name: release-for-ubuntu
+name: release-for-ubuntu-draft
 on: 
-  push:
+  workflow_dispatch:
+  
 
 jobs:
   build:

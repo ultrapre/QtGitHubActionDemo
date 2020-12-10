@@ -1,7 +1,9 @@
 name: build-windows-mingw
 on:
-  push
-  
+  push:
+  workflow_dispatch:
+env:
+  targetName: qmake_action
 jobs:
   build-test:
     name: Build the project for windows platform with Qt5 and mingw
@@ -17,8 +19,6 @@ jobs:
           - qt_ver: 5.15.2
             qt_arch: win64_mingw81
             qt_arch_install: mingw81_64
-    env:
-      targetName: QtGitHubActionDemo
     steps:
       # Cache Qt
       - name: cacheQt
