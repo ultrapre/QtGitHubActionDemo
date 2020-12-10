@@ -32,7 +32,7 @@ jobs:
       - name: artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: macos.zip
+          name: ios.zip
           path: Release-iphonesimulator/QtGitHubActionDemo.app
 
       - name: Packing
@@ -42,3 +42,9 @@ jobs:
           zip -q -r QtGitHubActionDemo.zip Payload
           mv QtGitHubActionDemo.zip QtGitHubActionDemo.ipa
           ls -l
+
+      - name: artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ios-packed.ipa
+          path: QtGitHubActionDemo.ipa

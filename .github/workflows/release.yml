@@ -1,8 +1,6 @@
 name: release
 on:
-  push:
-    tags:
-      - v*
+  workflow_dispatch:
 env:
   OUTPUT_FILE: QtGitHubActionDemo
   RELEASE_NAME: qtgithubactiondemo

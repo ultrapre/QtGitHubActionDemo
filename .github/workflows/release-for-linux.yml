@@ -40,6 +40,7 @@ jobs:
           ls -l
 
       - name: Gets latest created release info
+        if: startsWith(github.event.ref, 'refs/tags/')
         id: latest_release_info
         uses: jossef/action-latest-release-info@v1.1.0
         env:
@@ -70,4 +71,11 @@ jobs:
         run: |
             tar -zcvf ${{ env.outputdir }}.tar.gz ${{ env.outputdir }}
             ls -l
-        
+      
+      - name: artifacts
+        env:
+          outputdir: QtGitHubActionDemo-${{ steps.latest_release_info.outputs.tag_name }}-for-linux-x64
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.outputdir }}
+          path: ${{ env.outputdir }}.tar.gz

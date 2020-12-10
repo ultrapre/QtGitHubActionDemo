@@ -17,6 +17,8 @@ jobs:
           - qt_ver: 5.15.2
             qt_arch: win64_mingw81
             qt_arch_install: mingw81_64
+    env:
+      targetName: QtGitHubActionDemo
     steps:
       # Cache Qt
       - name: cacheQt
@@ -42,5 +44,13 @@ jobs:
       - name: build-mingw
         shell: cmd
         run: |
-          qmake
+          mkdir build
+          cd build
+          qmake -r CONFIG+=release CONFIG+=qtquickcompiler ..\${{ env.targetName }}.pro
           make
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: ${{ env.targetName }}-${{ matrix.qt_arch }}
+          path: build\release
+          

@@ -36,4 +36,38 @@ jobs:
       - name: Build project
         id: BuildPorject
         run: qmake && make
+        
+      - name: Deploy
+        continue-on-error: true
+        env:
+          outputdir: QtGitHubActionDemo-${{ steps.latest_release_info.outputs.tag_name }}-for-linux-x64
+          #linuxdeployqt_url: https://github.com/probonopd/linuxdeployqt/releases/download/6/linuxdeployqt-6-x86_64.AppImage
+          linuxdeployqt_url: https://github.com/probonopd/linuxdeployqt/releases/download/7/linuxdeployqt-7-x86_64.AppImage
+          linuxdeployqt: linuxdeployqt-7-x86_64.AppImage
+        run: |
+          export PATH=$PATH:$PWD
+          echo $PATH
+          pwd
+          mkdir ${{ env.outputdir }}
+          cp QtGitHubActionDemo ${{ env.outputdir }}
+          wget ${{ env.linuxdeployqt_url }}
+          ls -l
+          chmod a+x ${{ env.linuxdeployqt }}
+          ./${{ env.linuxdeployqt }} -version
+          ./${{ env.linuxdeployqt }} ${{ env.outputdir }}/QtGitHubActionDemo -appimage
+          
+      - name: Packet with tar
+        env:
+          outputdir: QtGitHubActionDemo-${{ steps.latest_release_info.outputs.tag_name }}-for-linux-x64
+        run: |
+            tar -zcvf ${{ env.outputdir }}.tar.gz ${{ env.outputdir }}
+            ls -l
+      
+      - name: artifacts
+        env:
+          outputdir: QtGitHubActionDemo-${{ steps.latest_release_info.outputs.tag_name }}-for-linux-x64
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.outputdir }}
+          path: ${{ env.outputdir }}.tar.gz
 
