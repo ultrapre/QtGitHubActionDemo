@@ -39,12 +39,6 @@ jobs:
           make
           ls -l
 
-      - name: Gets latest created release info
-        if: startsWith(github.event.ref, 'refs/tags/')
-        id: latest_release_info
-        uses: jossef/action-latest-release-info@v1.1.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.DAILYBUILDING }}
       
       - name: Deploy
         continue-on-error: true

@@ -1,10 +1,6 @@
 name: daily-build-for-windows
 on:
-  push:
-    branches:
-      - master
-    tags:
-      - v*
+  workflow_dispatch:
   
 jobs:
   build-test:
