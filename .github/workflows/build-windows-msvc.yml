@@ -1,6 +1,6 @@
 name: Windows MSVC
 on:
-  push:
+  #push:
   workflow_dispatch:
 
 env:

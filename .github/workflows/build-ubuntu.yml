@@ -1,6 +1,6 @@
 name: build-ubuntu
 on: 
-  push:
+  #push:
   workflow_dispatch:
 env:
   targetName: qmake_action
